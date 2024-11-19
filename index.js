@@ -18,13 +18,13 @@ let score = 0;
 let requestAnimateId;
 
 function displayHighScores() {
-    const records = JSON.parse(localStorage.getItem('highScores')) || [];
-    const list = document.getElementById('highScoresList'); // Список для рекордов
+    const records = (JSON.parse(localStorage.getItem('highScores'))).slice(0, 10) || [];
+    const list = document.getElementById('highScoresList');
 
     list.innerHTML = '';
 
     records.forEach((record, index) => {
-        const li = document.createElement('li'); // Создаём новый элемент списка
+        const li = document.createElement('li');
 
         li.textContent = ` ${record} очков `;
 
@@ -41,10 +41,9 @@ function saveNewRecord(score) {
     localStorage.setItem('highScores', JSON.stringify(records));
 }
 
-// Получаем родительский элемент, который содержит все кнопки
 const buttonWrapper = document.querySelector('.button_wrapper');
 
-// Добавляем обработчик события на родительский элемент
+
 buttonWrapper.addEventListener('click', (event) => {
     switch (event.target.textContent) {
         case 'Easy':
@@ -241,9 +240,9 @@ function movePac(moveDirection) {
     let isWall = false;
     let rotate = '';
 
-    // Функция проверки на стену
+
     const checkWall = (x, y) => {
-        isWall = false; // сбрасываем статус стены
+        isWall = false;
         completeWallMaps.forEach((elem) => {
             if (elem.w && elem.x === x && elem.y === y) {
                 isWall = true;
@@ -251,7 +250,7 @@ function movePac(moveDirection) {
         });
     };
 
-    // Проверяем направление и обновляем координаты пакмена
+
     if (moveDirection === 8) {
         checkWall(pac_man.x, pac_man.y - 1);
         if (!isWall) {
@@ -284,7 +283,6 @@ function movePac(moveDirection) {
         }
     }
 
-    // Если стен нет, обновляем позицию пакмена на экране
     if (!isWall) {
         const allPacContainer = document.querySelectorAll(".pac");
 
@@ -302,7 +300,6 @@ function movePac(moveDirection) {
         map.appendChild(pacElement);
         pressed = false;
 
-        // Проверка на съеденную еду
         completeWallMaps.forEach((e) => {
             if (e.f && e.x === pac_man.x && e.y === pac_man.y) {
                 foodElement = document.createElement("div");
@@ -318,7 +315,8 @@ function movePac(moveDirection) {
         });
 
         document.getElementById("score").innerHTML = score;
-    } else if (pressed) {
+    }
+    else if (pressed) {
         activeDirection = previousActiveDirection;
         pressed = false;
         movePac(activeDirection);
@@ -329,7 +327,6 @@ function moveGhost1Random() {
     if (!checkIfPacEaten()) {
         let isWall = false;
 
-        // Проверяем, столкнется ли призрак со стеной в текущем направлении
         completeWallMaps.forEach((elem) => {
             if (
                 (ghost1Direction === 1 && elem.x === ghost1.x && elem.y === ghost1.y - 1 && elem.w) ||
@@ -341,23 +338,25 @@ function moveGhost1Random() {
             }
         });
 
-        // Если призрак не столкнулся со стеной, перемещаем его
         if (!isWall) {
             if (ghost1Direction === 1) {
                 ghost1 = { x: ghost1.x, y: ghost1.y - 1 };
-            } else if (ghost1Direction === 2) {
+            }
+            else if (ghost1Direction === 2) {
                 ghost1 = { x: ghost1.x + 1, y: ghost1.y };
-            } else if (ghost1Direction === 3) {
+            }
+            else if (ghost1Direction === 3) {
                 ghost1 = { x: ghost1.x, y: ghost1.y + 1 };
-            } else if (ghost1Direction === 4) {
+            }
+            else if (ghost1Direction === 4) {
                 ghost1 = { x: ghost1.x - 1, y: ghost1.y };
             }
-        } else {
-            // Если столкнулся со стеной, выбираем новое случайное направление
+        }
+        else {
+
             ghost1Direction = Math.floor(Math.random() * 4) + 1;
         }
 
-        // Обновляем элемент призрака на карте
         const allGhostContainer = document.querySelectorAll(".ghost1");
         allGhostContainer.forEach((element) => element.remove());
 
@@ -387,14 +386,18 @@ function moveGhost2Random() {
         if (!isWall) {
             if (ghost2Direction === 1) {
                 ghost2 = { x: ghost2.x, y: ghost2.y - 1 };
-            } else if (ghost2Direction === 2) {
+            }
+            else if (ghost2Direction === 2) {
                 ghost2 = { x: ghost2.x + 1, y: ghost2.y };
-            } else if (ghost2Direction === 3) {
+            }
+            else if (ghost2Direction === 3) {
                 ghost2 = { x: ghost2.x, y: ghost2.y + 1 };
-            } else if (ghost2Direction === 4) {
+            }
+            else if (ghost2Direction === 4) {
                 ghost2 = { x: ghost2.x - 1, y: ghost2.y };
             }
-        } else {
+        }
+        else {
             ghost2Direction = Math.floor(Math.random() * 4) + 1;
         }
 
@@ -427,14 +430,18 @@ function moveGhost3Random() {
         if (!isWall) {
             if (ghost3Direction === 1) {
                 ghost3 = { x: ghost3.x, y: ghost3.y - 1 };
-            } else if (ghost3Direction === 2) {
+            }
+            else if (ghost3Direction === 2) {
                 ghost3 = { x: ghost3.x + 1, y: ghost3.y };
-            } else if (ghost3Direction === 3) {
+            }
+            else if (ghost3Direction === 3) {
                 ghost3 = { x: ghost3.x, y: ghost3.y + 1 };
-            } else if (ghost3Direction === 4) {
+            }
+            else if (ghost3Direction === 4) {
                 ghost3 = { x: ghost3.x - 1, y: ghost3.y };
             }
-        } else {
+        }
+        else {
             ghost3Direction = Math.floor(Math.random() * 4) + 1;
         }
 
@@ -467,14 +474,18 @@ function moveGhost4Random() {
         if (!isWall) {
             if (ghost4Direction === 1) {
                 ghost4 = { x: ghost4.x, y: ghost4.y - 1 };
-            } else if (ghost4Direction === 2) {
+            }
+            else if (ghost4Direction === 2) {
                 ghost4 = { x: ghost4.x + 1, y: ghost4.y };
-            } else if (ghost4Direction === 3) {
+            }
+            else if (ghost4Direction === 3) {
                 ghost4 = { x: ghost4.x, y: ghost4.y + 1 };
-            } else if (ghost4Direction === 4) {
+            }
+            else if (ghost4Direction === 4) {
                 ghost4 = { x: ghost4.x - 1, y: ghost4.y };
             }
-        } else {
+        }
+        else {
             ghost4Direction = Math.floor(Math.random() * 4) + 1;
         }
 
