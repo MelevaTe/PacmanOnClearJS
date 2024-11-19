@@ -16,6 +16,7 @@ let previousActiveDirection;
 let pressed = false;
 let score = 0;
 let requestAnimateId;
+const pressToStart = document.querySelector('.pressToStart');
 
 function displayHighScores() {
     const records = (JSON.parse(localStorage.getItem('highScores'))).slice(0, 10) || [];
@@ -159,6 +160,8 @@ window.addEventListener("keydown", (e) => {
     switch(e.key) {
         case "Enter":
             startGame = true;
+            pressToStart.classList.add("noAnimation");
+            pressToStart.style.opacity = 0;
             break
         case "ArrowRight":
             checkIfPacEaten();
